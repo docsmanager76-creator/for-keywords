@@ -117,6 +117,7 @@ with header `Date,Keyword,Amazon Path,Video Title,Affiliate Brands,Competition`.
 
 Then **commit and push to branch `claude/amazing-bell-ocazxb`**:
 
+    cd /home/user/for-keywords
     git add toolscope-keywords/nnp-keywords.csv
     git commit -m "NNP keywords: <DATE>"
     git push -u origin claude/amazing-bell-ocazxb
