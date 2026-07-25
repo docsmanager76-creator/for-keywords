@@ -44,6 +44,20 @@ lighting. Fall → leaf blowers, chainsaws, indoor appliances, heating. Winter �
 kitchen appliances, vacuums, indoor electronics. Spring → lawn mowers, tillers, aerators,
 garden prep.
 
+### STEP 0.5 — Check out the ledger branch (MANDATORY — before reading anything)
+The CSV lives only on branch `claude/amazing-bell-ocazxb`. The repo's default branch is
+`claude/cool-dirac-p39s91`, which does **not** contain the ledger. If the container starts on
+the default branch and you skip this step, the CSV will look "missing" and every run will halt.
+
+    cd /home/user/for-keywords
+    git fetch origin claude/amazing-bell-ocazxb
+    git checkout claude/amazing-bell-ocazxb 2>/dev/null \
+      || git checkout -b claude/amazing-bell-ocazxb origin/claude/amazing-bell-ocazxb
+    git pull origin claude/amazing-bell-ocazxb
+
+Retry the fetch/pull up to 4 times (2s, 4s, 8s, 16s) on network errors. Only if the branch
+genuinely cannot be fetched should you treat the ledger as unreachable and notify.
+
 ### STEP 1 — Load keyword history (MANDATORY — do not skip)
 Read `/home/user/for-keywords/toolscope-keywords/nnp-keywords.csv` and extract every value
 from the `Keyword` column.
