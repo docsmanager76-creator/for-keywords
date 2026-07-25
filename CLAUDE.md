@@ -55,6 +55,9 @@ repeats. Commit the ledger even if the batch itself is a draft.
 
 ## Output format
 
+- **Batch size: 10 keywords per run.** This supersedes any larger number in
+  the scheduled prompt. Ten vetted ideas beat fifteen padded ones, and a
+  smaller batch keeps the ledger from exhausting the niche too quickly.
 - Title style: `The 5 Best [Product] for [Use] 2026` (singular product is fine)
 - English, US market, 5–6 affiliate products per video
 - Save each batch as `keywords-<date>.csv`
