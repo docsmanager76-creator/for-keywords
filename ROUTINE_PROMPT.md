@@ -83,16 +83,35 @@ topic drawing roughly 10k-300k views. When you fall back, you MUST say so
 explicitly in both the output table and the notification, and mark the volume
 column as ESTIMATED. Never present an estimate as measured data.
 
-# STEP 4 - VERIFY COMPETITION
+# STEP 4 - RATE COMPETITION (DO NOT REJECT ON IT)
 Competition always requires counting videos; no API measures it. For each
 candidate search YouTube for dedicated "Best [product] [recent year]" roundup
-videos published in the LAST 12 MONTHS.
+videos published in the LAST 12 MONTHS, then assign a tier:
 
-  LOW  = roughly 3 or fewer, or the top results are older, from channels under
-         50k subs, or not exact-match optimised
-  HIGH = reject. Especially reject when a large review channel (Project Farm,
-         Pro Tool Reviews, This Old House and similar) already owns the exact
-         term.
+  LOW    = roughly 3 or fewer, or the top results are older, from channels
+           under 50k subs, or not exact-match optimised
+  MEDIUM = roughly 4-8, or one mid-size channel owns it but the titles are
+           ageing or not exact-match optimised
+  HIGH   = roughly 9 or more, or a large review channel (Project Farm, Pro
+           Tool Reviews, This Old House and similar) owns the exact term
+
+Rate honestly and keep all three tiers. Do not discard a candidate for being
+competitive -- the tier is information for the channel owner to act on, not a
+filter.
+
+Deliver a mix of 4 LOW, 3 MEDIUM and 3 HIGH. If a tier cannot be filled with
+genuine finds, deliver fewer and say which tier came up short; never relabel a
+keyword into the wrong tier to balance the table.
+
+For every MEDIUM and HIGH entry, the "How to compete" column must be concrete:
+name the channel or video that currently owns the term, say what the existing
+coverage lacks (out of date, missing a product class, thin testing, weak
+thumbnail, wrong use-case framing), and give the specific angle that could win
+the slot. "Make a better video" is not an answer. If no honest angle exists,
+drop the candidate rather than invent one.
+
+The TOO BIG volume ceiling from Step 3 applies to the LOW and MEDIUM tiers.
+HIGH-tier picks may exceed it, since large demand is the reason to attempt them.
 
 Note that Keyword Planner's own "competition" field measures advertiser bidding,
 not ranking difficulty. It is not a substitute for this step.
@@ -106,19 +125,25 @@ not ranking difficulty. It is not a substitute for this step.
   - Prefer genuinely uncovered products over safe, obvious ones.
 
 # OUTPUT
-Print one markdown table, best opportunity first, with these columns:
+Print one markdown table grouped by competition tier, LOW first, then MEDIUM,
+then HIGH, best opportunity first inside each tier, with these columns:
   Keyword | Suggested Title | Avg Monthly Searches | 3-Month Change |
-  YoY Change | Competition | Why it's an opportunity | 5-6 products to feature
+  YoY Change | Competition | Why it's an opportunity | How to compete |
+  5-6 products to feature
+
+Leave "How to compete" as a dash for LOW-tier rows; the field exists for the
+tiers where something already stands in the way.
 
 Then write the same rows to `keywords-<today>.csv` in the repository root.
 Get today's date from `date +%F` -- do not infer it, a past run misnamed a file
-by guessing. Use exactly this header, which keeps `covered.py` working:
+by guessing. If that filename already exists, do not overwrite it; append a
+short suffix. Use exactly this header, which keeps `covered.py` working:
 
-  Date,Keyword,Suggested Title,Avg Monthly Searches,Three Month Change,YoY Change,Competition,Why It's an Opportunity,Products to Feature
+  Date,Keyword,Suggested Title,Avg Monthly Searches,Three Month Change,YoY Change,Competition,Why It's an Opportunity,How To Compete,Products to Feature
 
-If fewer than 10 candidates survive Steps 3 and 4, deliver the ones that did
-and say plainly how many fell short and why. Never pad the list with weak
-picks to reach 10.
+If fewer than 10 candidates survive Step 3, deliver the ones that did and say
+plainly how many fell short and why. Never pad the list with weak picks to
+reach 10.
 
 # STEP 5 - COMMIT AND MERGE (MANDATORY)
 Commit the CSV, then merge your working branch into `main` and push `main`.
@@ -132,9 +157,9 @@ exactly how 38 daily batches once ended up stranded across 41 orphan branches.
 The merge is what makes Step 1 work tomorrow. Do not end the run without it.
 
 # STEP 6 - NOTIFY
-Send one PushNotification summarising the run: the top 3 picks with their
-volume and why they are open, the count delivered, and any caveat that affects
-how much the numbers can be trusted -- above all, whether volume was measured
-or estimated. Nobody is watching the session, so anything not in the
-notification will not be seen.
+Send one PushNotification summarising the run: the strongest LOW-tier pick and
+the strongest HIGH-tier pick with their volume, the tier counts delivered, and
+any caveat that affects how much the numbers can be trusted -- above all,
+whether volume was measured or estimated. Nobody is watching the session, so
+anything not in the notification will not be seen.
 ```
