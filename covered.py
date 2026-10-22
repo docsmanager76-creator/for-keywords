@@ -6,6 +6,7 @@ CSV schemas used so far -- each one has a "Keyword" column.
 
     python3 covered.py           # normalized core products, one per line
     python3 covered.py --raw     # full original keyword phrases with dates
+    python3 covered.py --dir automotive-keywords   # a niche subfolder instead
 """
 import csv, glob, os, re, sys
 
@@ -44,6 +45,8 @@ def load(root):
 
 def main():
     root = os.path.dirname(os.path.abspath(__file__))
+    if "--dir" in sys.argv:
+        root = os.path.join(root, sys.argv[sys.argv.index("--dir") + 1])
     rows = load(root)
     if "--raw" in sys.argv:
         for date, kw, src in rows:
